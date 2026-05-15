@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Câu hỏi về cách dùng
+    url: https://github.com/DAT-Software-Solutions/ai-skill/discussions
+    about: Hỏi cách dùng skill/agent, troubleshoot install.sh, hoặc thảo luận chung. Đừng mở issue cho câu hỏi.

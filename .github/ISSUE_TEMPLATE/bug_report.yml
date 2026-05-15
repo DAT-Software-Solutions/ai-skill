@@ -1,0 +1,83 @@
+name: Bug report
+description: Báo cáo lỗi của skill, agent, hoặc install.sh
+title: "[Bug]: "
+labels: ["bug", "needs-triage"]
+assignees:
+  - chuthuong2004
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Cảm ơn bạn đã báo bug! Vui lòng cung cấp đủ thông tin để maintainer reproduce được.
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Thành phần bị lỗi
+      options:
+        - install.sh (installer)
+        - Một skill cụ thể (ghi rõ ở mô tả)
+        - Một agent cụ thể (ghi rõ ở mô tả)
+        - README / docs
+        - Khác
+    validations:
+      required: true
+
+  - type: input
+    id: component-name
+    attributes:
+      label: Tên skill / agent (nếu có)
+      placeholder: "ví dụ: seo-expert"
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Mô tả lỗi
+      description: Điều gì đang xảy ra? Bạn expect điều gì?
+      placeholder: |
+        - Expected: ...
+        - Actual: ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Các bước reproduce
+      description: Liệt kê step-by-step để mình reproduce.
+      placeholder: |
+        1. Chạy `./install.sh`
+        2. Chọn ...
+        3. Thấy lỗi: ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Môi trường
+      description: OS, shell, version Claude Code, version skill/agent (nếu biết)
+      placeholder: |
+        - OS: macOS 14.5 / Ubuntu 22.04 / Windows 11 (WSL)
+        - Shell: zsh 5.9
+        - Claude Code: 1.x.x
+      render: markdown
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Log / output
+      description: Paste output lỗi, stack trace, hoặc transcript Claude Code (nếu có)
+      render: shell
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Trước khi gửi
+      options:
+        - label: Mình đã search issue cũ và chắc chắn đây không phải duplicate
+          required: true
+        - label: Mình đã đọc CONTRIBUTING.md
+          required: true

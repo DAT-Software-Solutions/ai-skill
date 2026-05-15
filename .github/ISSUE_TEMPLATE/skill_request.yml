@@ -1,0 +1,85 @@
+name: Skill / Agent request
+description: Đề xuất một skill hoặc subagent mới
+title: "[Request]: "
+labels: ["enhancement", "needs-triage"]
+assignees:
+  - chuthuong2004
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Đề xuất skill hoặc agent mới. Mô tả càng rõ use case, càng dễ được accept.
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Loại
+      options:
+        - Skill (thư mục trong skills/)
+        - Subagent (file trong agents/)
+        - Chưa biết — cần thảo luận
+    validations:
+      required: true
+
+  - type: input
+    id: name
+    attributes:
+      label: Tên đề xuất (kebab-case)
+      placeholder: "ví dụ: seo-keyword-analyzer"
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Vấn đề cần giải quyết
+      description: Skill/agent này giải quyết vấn đề gì? Khi nào người dùng cần nó?
+    validations:
+      required: true
+
+  - type: textarea
+    id: trigger
+    attributes:
+      label: Khi nào skill/agent này nên được trigger?
+      description: |
+        Mô tả cụ thể tình huống. Ví dụ: "Khi user hỏi về SEO, tối ưu meta tags,
+        keyword research, hoặc cải thiện ranking Google."
+    validations:
+      required: true
+
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Hành vi mong muốn
+      description: Skill/agent sẽ làm gì? Output trông như thế nào?
+    validations:
+      required: true
+
+  - type: textarea
+    id: examples
+    attributes:
+      label: Ví dụ prompt / use case
+      description: 1-3 ví dụ prompt thực tế mà skill/agent này sẽ xử lý.
+      placeholder: |
+        1. "Tối ưu SEO cho trang sản phẩm này"
+        2. "Generate meta description cho 10 bài blog"
+
+  - type: dropdown
+    id: willing-to-implement
+    attributes:
+      label: Bạn có sẵn sàng tự implement và mở PR không?
+      options:
+        - "Có — mình sẽ làm và mở PR"
+        - "Không — chỉ đề xuất, để maintainer / contributor khác làm"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Trước khi gửi
+      options:
+        - label: Mình đã check repo và chắc chắn skill/agent này chưa tồn tại
+          required: true
+        - label: Mình đã đọc CONTRIBUTING.md
+          required: true
