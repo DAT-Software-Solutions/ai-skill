@@ -1,14 +1,14 @@
-# claude-skills
+# ai-skill
 
-A curated collection of [Claude Code](https://docs.claude.com/en/docs/claude-code) **skills** and **subagents** — also installable into **Cursor** via `AGENTS.md`.
+Bộ sưu tập **skills** và **subagents** dùng nội bộ tại **[DAT Software Solutions](https://github.com/DAT-Software-Solutions)** cho [Claude Code](https://docs.claude.com/en/docs/claude-code) — cũng cài được vào **Cursor** qua `AGENTS.md`.
 
-One URL. Pick AI, pick scope, pick which items. Nothing is auto-installed.
+Một URL. Chọn AI tool, chọn scope, chọn item cần cài. Không có gì tự động — bạn chọn gì thì cài cái đó.
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/chuthuong2004/claude-skills/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/DAT-Software-Solutions/ai-skill/main/install.sh | bash
 ```
 
-You'll get three interactive prompts:
+Bạn sẽ thấy 3 prompt tương tác:
 
 ```
 1) Pick AI tool         →  Claude Code  /  Cursor
@@ -18,37 +18,37 @@ You'll get three interactive prompts:
 
 ---
 
-## What's in the repo
+## Nội dung repo
 
 ### Skills (`skills/<name>/`)
 
-Workflow recipes — auto-trigger on matching prompts, enforce a strict output structure.
+Workflow recipes — auto-trigger khi prompt match, ép output theo cấu trúc cố định.
 
-| Skill | What it does |
+| Skill | Mô tả |
 |---|---|
-| [`architecture-doc-writer`](skills/architecture-doc-writer/) | Full backend HLDs, migration plans, component deep-dives — Mermaid diagrams, state machines, queue topology, SQL schema, phased rollouts, risk registers, SLOs. Triggers on *"viết tài liệu kiến trúc"*, *"architecture doc"*, *"HLD"*, *"migration plan"*, *"RFC"*. |
+| [`architecture-doc-writer`](skills/architecture-doc-writer/) | Viết HLD backend, migration plan, component deep-dives — Mermaid, state machines, queue topology, SQL schema, phased rollout, risk register, SLO. Trigger trên *"viết tài liệu kiến trúc"*, *"architecture doc"*, *"HLD"*, *"migration plan"*, *"RFC"*. |
 
 ### Subagents (`agents/<name>.md`)
 
-Specialist personas with their own context window. Used via the `Task` tool or proactively by Claude.
+Specialist persona, có context window riêng. Gọi qua tool `Task` hoặc Claude tự kích hoạt.
 
-| Agent | What it does |
+| Agent | Mô tả |
 |---|---|
-| [`seo-expert`](agents/seo-expert.md) | Technical SEO for **Next.js App Router** — metadata API, JSON-LD, sitemaps, robots, canonical/hreflang, image SEO, Core Web Vitals, i18n. Audits new pages and PRs. Model: `sonnet`. |
+| [`seo-expert`](agents/seo-expert.md) | Technical SEO cho **Next.js App Router** — metadata API, JSON-LD, sitemaps, robots, canonical/hreflang, image SEO, Core Web Vitals, i18n. Audit page mới và PR. Model: `sonnet`. |
 
-> More items will be added without breaking existing installs. The installer only touches what you select.
+> Sẽ có thêm item mới trong tương lai mà không phá install cũ. Installer chỉ động vào những gì bạn chọn.
 
 ---
 
-## Install — interactive (single URL)
+## Cài đặt — interactive (1 URL)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/chuthuong2004/claude-skills/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/DAT-Software-Solutions/ai-skill/main/install.sh | bash
 ```
 
-The picker reads from `/dev/tty` so it works under `curl | bash`.
+Picker đọc từ `/dev/tty` nên chạy ngon dưới `curl | bash`.
 
-### Step 1 — Pick AI tool
+### Bước 1 — Chọn AI tool
 
 ```
 Pick AI tool (↑/↓ + Enter, q to cancel):
@@ -56,7 +56,7 @@ Pick AI tool (↑/↓ + Enter, q to cancel):
   Cursor        →  AGENTS.md at project root
 ```
 
-### Step 2 — (Claude only) Pick scope
+### Bước 2 — (Claude only) Chọn scope
 
 ```
 Install destination:
@@ -64,13 +64,13 @@ Install destination:
   project → $PWD/.claude/{skills,agents}
 
 Pick scope (↑/↓ + Enter, q to cancel):
-> user      (global — available in every project)
-  project   (scoped to current directory)
+> user      (global — dùng được trong mọi project)
+  project   (chỉ trong thư mục hiện tại)
 ```
 
-Cursor target always writes to `$PWD/AGENTS.md` (override with `CURSOR_AGENTS_FILE=...`).
+Cursor luôn ghi vào `$PWD/AGENTS.md` (override bằng `CURSOR_AGENTS_FILE=...`).
 
-### Step 3 — Pick items (multi-select)
+### Bước 3 — Chọn item (multi-select)
 
 ```
 Pick item(s) (↑/↓ move, Space toggle, a all, Enter confirm, q cancel):
@@ -78,35 +78,35 @@ Pick item(s) (↑/↓ move, Space toggle, a all, Enter confirm, q cancel):
   [x] seo-expert               (agent)
 ```
 
-Toggle with `Space`, toggle all with `a`, confirm with `Enter`. Nothing happens until you confirm.
+`Space` toggle, `a` chọn tất cả, `Enter` confirm. Không confirm thì không có gì xảy ra.
 
 ---
 
-## Install — non-interactive (skip prompts)
+## Cài đặt — non-interactive (skip prompt)
 
 ```bash
-# Claude Code, user-level, one agent
+# Claude Code, user-level, 1 agent
 ./install.sh --claude --user seo-expert
 
-# Claude Code, project-level, multiple items
+# Claude Code, project-level, nhiều item
 ./install.sh --claude --project seo-expert architecture-doc-writer
 
-# Cursor (always project root)
+# Cursor (luôn ghi vào project root)
 ./install.sh --cursor seo-expert architecture-doc-writer
 
-# Symlink instead of copy (Claude only, good for live-edit)
+# Symlink thay vì copy (Claude only, tiện để live-edit)
 ./install.sh --claude --link --user seo-expert
 
-# Bulk
+# Cài hàng loạt
 ./install.sh --claude --user all-skills
 ./install.sh --claude --user all-agents
 
-# Uninstall
+# Gỡ
 ./install.sh --uninstall --claude --user seo-expert
-./install.sh --uninstall --cursor seo-expert    # removes that section from AGENTS.md
+./install.sh --uninstall --cursor seo-expert    # xoá section khỏi AGENTS.md
 ```
 
-> `all` by itself is **not supported** — use `all-skills` or `all-agents`.
+> `all` đơn lẻ **không hỗ trợ** — phải dùng `all-skills` hoặc `all-agents`.
 
 ### Env overrides
 
@@ -118,7 +118,7 @@ CURSOR_AGENTS_FILE=/path    # override Cursor AGENTS.md path
 
 ---
 
-## How each target stores items
+## Mỗi target lưu item như thế nào
 
 ### Claude Code
 
@@ -127,27 +127,27 @@ CURSOR_AGENTS_FILE=/path    # override Cursor AGENTS.md path
 | Skill | `~/.claude/skills/<name>/` (full directory) |
 | Agent | `~/.claude/agents/<name>.md` (single file) |
 
-Swap `~/.claude/` for `$PWD/.claude/` for project scope.
+Đổi `~/.claude/` thành `$PWD/.claude/` cho project scope.
 
 ### Cursor
 
-Everything goes into a single `AGENTS.md` at the project root. Each item becomes a section delimited by marker comments:
+Tất cả vào 1 file `AGENTS.md` ở project root. Mỗi item là 1 section ngăn bởi marker comment:
 
 ```markdown
-<!-- claude-skills:start seo-expert -->
+<!-- ai-skill:start seo-expert -->
 ## Agent: seo-expert
 
 (full agent prompt)
-<!-- claude-skills:end seo-expert -->
+<!-- ai-skill:end seo-expert -->
 ```
 
-- **Skills** are flattened: `## Skill: <name>` + the `SKILL.md` body, followed by `### References` and `### Assets` sub-sections containing each referenced file inline.
-- **Agents** are stripped of YAML frontmatter and inserted under `## Agent: <name>`.
-- Re-installing the same item replaces its block in place — **idempotent**, your manual edits outside the markers are preserved.
+- **Skills** được flatten: `## Skill: <name>` + body `SKILL.md`, kèm sub-section `### References` và `### Assets` chứa từng file inline.
+- **Agents** strip YAML frontmatter, gắn dưới `## Agent: <name>`.
+- Cài lại cùng 1 item sẽ replace block tại chỗ — **idempotent**, edit ngoài marker được giữ nguyên.
 
 ---
 
-## Manual install (if you don't want to run the script)
+## Cài tay (nếu không muốn chạy script)
 
 **Claude — skill:**
 
@@ -163,9 +163,9 @@ mkdir -p ~/.claude/agents
 cp agents/seo-expert.md ~/.claude/agents/
 ```
 
-**Cursor:** the script's `AGENTS.md` flattening logic is non-trivial — running `./install.sh --cursor <name>` is strongly recommended over hand-writing.
+**Cursor:** logic flatten `AGENTS.md` không đơn giản — chạy `./install.sh --cursor <name>` thay vì viết tay.
 
-> After install, **restart Claude Code / Cursor** so items are picked up.
+> Sau khi cài, **restart Claude Code / Cursor** để load item mới.
 
 ---
 
@@ -178,50 +178,50 @@ ls ~/.claude/skills/architecture-doc-writer
 ls ~/.claude/agents/seo-expert.md
 ```
 
-Then in Claude Code: type `/architecture-doc-writer`, or ask naturally (*"viết tài liệu kiến trúc cho hệ thống X"*). For the agent: *"use the seo-expert agent to audit `app/blog/[slug]/page.tsx`"*.
+Trong Claude Code: gõ `/architecture-doc-writer`, hoặc nói tự nhiên (*"viết tài liệu kiến trúc cho hệ thống X"*). Với agent: *"use the seo-expert agent to audit `app/blog/[slug]/page.tsx`"*.
 
 **Cursor:**
 
 ```bash
-grep '<!-- claude-skills:start' AGENTS.md
+grep '<!-- ai-skill:start' AGENTS.md
 ```
 
-Cursor reads `AGENTS.md` automatically when opened in the project.
+Cursor tự đọc `AGENTS.md` khi mở project.
 
 ---
 
-## Updating
+## Update
 
 ```bash
-# Re-run the installer for the items you care about
-curl -fsSL https://raw.githubusercontent.com/chuthuong2004/claude-skills/main/install.sh | bash
+# Chạy lại installer cho item cần update
+curl -fsSL https://raw.githubusercontent.com/DAT-Software-Solutions/ai-skill/main/install.sh | bash
 
-# Or if cloned:
+# Hoặc nếu đã clone:
 git pull && ./install.sh --claude --user all-skills all-agents
 ```
 
-> If you installed Claude items with `--link`, `git pull` alone refreshes them.
+> Nếu cài Claude item bằng `--link`, chỉ cần `git pull` là refresh.
 
 ---
 
-## Uninstalling
+## Uninstall
 
 ```bash
 ./install.sh --uninstall --claude --user seo-expert
-./install.sh --uninstall --cursor seo-expert     # removes the AGENTS.md section
+./install.sh --uninstall --cursor seo-expert     # xoá section trong AGENTS.md
 ```
 
-Or by hand:
+Hoặc tay:
 
 ```bash
 rm ~/.claude/agents/seo-expert.md
 rm -rf ~/.claude/skills/architecture-doc-writer
-# For Cursor: delete the section between the matching <!-- claude-skills:start/end --> markers.
+# Cursor: xoá đoạn giữa cặp marker <!-- ai-skill:start/end -->.
 ```
 
 ---
 
-## Repo layout
+## Cấu trúc repo
 
 ```
 .
@@ -230,34 +230,38 @@ rm -rf ~/.claude/skills/architecture-doc-writer
 ├── install.sh
 ├── agents/
 │   └── seo-expert.md              # → ~/.claude/agents/seo-expert.md  (Claude)
-│                                  # → ## Agent: seo-expert in AGENTS.md (Cursor)
+│                                  # → ## Agent: seo-expert trong AGENTS.md (Cursor)
 └── skills/
     └── architecture-doc-writer/   # → ~/.claude/skills/architecture-doc-writer/ (Claude)
-        ├── SKILL.md               # → ## Skill: architecture-doc-writer in AGENTS.md (Cursor)
+        ├── SKILL.md               # → ## Skill: architecture-doc-writer trong AGENTS.md (Cursor)
         ├── references/            # → ### References / #### <file> sub-sections
         └── assets/                # → ### Assets / #### <file> sub-sections
 ```
 
 ---
 
-## Contributing
+## Đóng góp (nội bộ DAT)
 
-**Adding a skill:**
-1. New dir under `skills/<your-skill-name>/`.
-2. `SKILL.md` with YAML frontmatter (`name`, `description`).
-3. Optional: `references/` (loaded on demand by Claude), `assets/` (templates).
-4. Add a row to the **Skills** table above.
+**Thêm skill:**
+1. Tạo thư mục mới dưới `skills/<your-skill-name>/`.
+2. `SKILL.md` với YAML frontmatter (`name`, `description`).
+3. Optional: `references/` (Claude load on demand), `assets/` (template).
+4. Thêm 1 dòng vào bảng **Skills** ở trên.
 
-**Adding a subagent:**
-1. New file at `agents/<your-agent-name>.md`.
+**Thêm subagent:**
+1. File mới tại `agents/<your-agent-name>.md`.
 2. Frontmatter: `name`, `description`, optional `model` (`sonnet` / `opus` / `haiku`).
-3. Body = the system prompt — be specific about when to use it, what to inspect, what conventions to follow.
-4. Add a row to the **Subagents** table above.
+3. Body = system prompt — viết rõ khi nào dùng, kiểm tra gì, convention nào.
+4. Thêm 1 dòng vào bảng **Subagents** ở trên.
 
-See the [skills docs](https://docs.claude.com/en/docs/claude-code/skills) and [subagents docs](https://docs.claude.com/en/docs/claude-code/sub-agents).
+Tham khảo [skills docs](https://docs.claude.com/en/docs/claude-code/skills) và [subagents docs](https://docs.claude.com/en/docs/claude-code/sub-agents).
+
+Workflow: tạo branch, push, mở PR vào `main`. Review nội bộ trước khi merge.
 
 ---
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT — xem [LICENSE](LICENSE).
+
+© DAT Software Solutions.

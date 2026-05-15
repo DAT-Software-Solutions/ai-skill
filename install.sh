@@ -29,7 +29,7 @@
 #   all-agents    install every agent from this repo
 #
 # Examples:
-#   curl -fsSL https://raw.githubusercontent.com/chuthuong2004/claude-skills/main/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/DAT-Software-Solutions/ai-skill/main/install.sh | bash
 #   ./install.sh --claude --user seo-expert
 #   ./install.sh --cursor seo-expert architecture-doc-writer
 #   ./install.sh --uninstall --claude --user seo-expert
@@ -50,7 +50,7 @@ err()   { echo "$(color '1;31' '✗') $*" >&2; }
 # When piped from curl, $REPO_DIR doesn't have skills/ — clone the repo to a temp dir.
 if [ ! -d "$SKILLS_SRC" ]; then
   TMPDIR_REPO="$(mktemp -d)"
-  REPO_URL="${SKILL_REPO_URL:-https://github.com/chuthuong2004/claude-skills.git}"
+  REPO_URL="${SKILL_REPO_URL:-https://github.com/DAT-Software-Solutions/ai-skill.git}"
   info "Cloning $REPO_URL into $TMPDIR_REPO..."
   git clone --depth 1 "$REPO_URL" "$TMPDIR_REPO" >/dev/null
   REPO_DIR="$TMPDIR_REPO"
@@ -410,8 +410,8 @@ uninstall_one_claude() {
 
 # ---- Cursor install/uninstall (AGENTS.md) ----------------------------------
 
-cursor_start_marker() { echo "<!-- claude-skills:start $1 -->"; }
-cursor_end_marker()   { echo "<!-- claude-skills:end $1 -->"; }
+cursor_start_marker() { echo "<!-- ai-skill:start $1 -->"; }
+cursor_end_marker()   { echo "<!-- ai-skill:end $1 -->"; }
 
 # Strip YAML frontmatter from stdin (only if the very first line is `---`).
 strip_frontmatter() {
@@ -507,8 +507,8 @@ install_one_cursor() {
     cat > "$file" <<'HEADER'
 # AGENTS
 
-Skills and subagents installed via [claude-skills](https://github.com/chuthuong2004/claude-skills).
-Each section below is delimited by `<!-- claude-skills:start NAME -->` / `<!-- claude-skills:end NAME -->`
+Skills and subagents installed via [ai-skill](https://github.com/DAT-Software-Solutions/ai-skill) (DAT Software Solutions).
+Each section below is delimited by `<!-- ai-skill:start NAME -->` / `<!-- ai-skill:end NAME -->`
 markers — feel free to edit, but keep the markers so re-installs stay idempotent.
 HEADER
   fi
@@ -615,7 +615,7 @@ main() {
       --link)          MODE="link"; shift ;;
       --uninstall)     action="uninstall"; shift ;;
       --cursor-file)   CURSOR_AGENTS_FILE="$2"; shift 2 ;;
-      -h|--help)       sed -n '2,40p' "$SELF" 2>/dev/null || echo "See https://github.com/chuthuong2004/claude-skills#install"; return ;;
+      -h|--help)       sed -n '2,40p' "$SELF" 2>/dev/null || echo "See https://github.com/DAT-Software-Solutions/ai-skill#install"; return ;;
       --)              shift; break ;;
       -*)              err "Unknown flag: $1"; return 1 ;;
       *)               break ;;
