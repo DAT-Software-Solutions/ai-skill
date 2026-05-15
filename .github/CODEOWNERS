@@ -1,0 +1,6 @@
+# CODEOWNERS — only the maintainer can approve PRs into main.
+# Every file in this repository is owned by @chuthuong2004.
+# GitHub will automatically request review from this owner on every PR,
+# and the branch ruleset requires CODEOWNERS approval before merging.
+
+* @chuthuong2004
